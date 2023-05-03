@@ -20,8 +20,8 @@ namespace KUSYS_Demo.Infastructure.ServiceExtensions
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IStudentRepository, StudentsRepository>();
-            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddTransient<IStudentRepository, StudentsRepository>();
+            services.AddTransient<ICourseRepository, CoursesRepository>();
 
             return services;
         }

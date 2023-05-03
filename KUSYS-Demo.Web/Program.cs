@@ -1,15 +1,17 @@
 using KUSYS_Demo.Infastructure.ServiceExtensions;
+using KUSYS_Demo.Services;
 using KUSYS_Demo.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddDIServices(builder.Configuration);
+builder.Services.AddScoped<IStudentsService, StudentsService>();
 
 var app = builder.Build();
 
-builder.Services.AddDIServices(builder.Configuration);
-builder.Services.AddScoped<IStudentsService, IStudentsService>();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
