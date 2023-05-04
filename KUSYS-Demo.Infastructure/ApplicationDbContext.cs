@@ -58,7 +58,8 @@ namespace KUSYS_Demo.Infastructure
                 Email = "admin@gmail.com",
                 EmailConfirmed = true,
                 UserName = "admin@gmail.com",
-                NormalizedUserName = "ADMIN@GMAİL.COM"
+                NormalizedUserName = "ADMIN@GMAIL.COM",
+                NormalizedEmail = "ADMIN@GMAIL.COM",
             };
 
             //set user password

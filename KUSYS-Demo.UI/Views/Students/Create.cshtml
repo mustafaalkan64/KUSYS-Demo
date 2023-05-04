@@ -1,0 +1,135 @@
+﻿@model KUSYS_Demo.Core.ViewModels.StudentViewModel
+
+@{
+    ViewData["Title"] = "Yeni Öğrenci Ekleme";
+    Layout = "_LayoutNew";
+}
+
+
+
+<div class="row">
+    <!-- left column -->
+    <div class="col-md-12">
+        <!-- jquery validation -->
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Öğrenci Formu <small></small></h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <form asp-action="Create" asp-id="studentForm" id="studentForm">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label asp-for="FirstName" class="control-label"></label>
+                        <input asp-for="FirstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LastName" class="control-label"></label>
+                        <input asp-for="LastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UserName" class="control-label"></label>
+                        <input asp-for="UserName" class="form-control" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Birthday" class="control-label"></label>
+                        <input asp-for="Birthday" type="date" asp-format="{0:dd.MM.yyyy}" class="form-control" />
+                        <span asp-validation-for="Birthday" class="text-danger"></span>
+                    </div>
+                    
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.card -->
+    </div>
+    <!--/.col (left) -->
+    <!-- right column -->
+    <div class="col-md-6">
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </div>
+    <!--/.col (right) -->
+</div>
+
+<script src="~/WebCore/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="~/WebCore/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- jquery-validation -->
+<script src="~/WebCore/plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="~/WebCore/plugins/jquery-validation/additional-methods.min.js"></script>
+<!-- AdminLTE App -->
+<script src="~/WebCore/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="~/WebCore/dist/js/demo.js"></script>
+<!-- Page specific script -->
+<script src="~/WebCore/plugins/toastr/toastr.min.js"></script>
+
+<script type="text/javascript">
+
+       $(document).ready(function () {
+        $("#studentForm").submit(function (event) {
+            var formData = {
+                firstName: $("#FirstName").val(),
+                lastName: $("#LastName").val(),
+                userName: $("#UserName").val(),
+                email: $("#Email").val(),
+                birthday: $("#Birthday").val(),
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/Students/Create",
+                data: formData,
+                dataType: "json",
+                encode: true,
+            }).done(function (data) {
+                debugger;
+                if(data.status == true) {
+                    $(document).Toasts('create', {
+                        class: 'bg-success',
+                        title: 'Success',
+                        subtitle: '',
+                        body: data.message,
+                        delay: 750,
+                    })
+                }
+                else {
+                    $(document).Toasts('create', {
+                        class: 'bg-danger',
+                        title: 'Fail!',
+                        subtitle: '',
+                        body: data.message,
+                        delay: 750,
+                    })
+                }
+                console.log(data);
+            });
+
+            event.preventDefault();
+        });
+    });
+</script>
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
