@@ -24,10 +24,10 @@ namespace KUSYS_Demo.UI.Controllers
             _studentService = studentService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> List()
         {
-            var result = _studentService.GetAll();
-            return View();
+            var result = await _studentService.GetAll();
+            return View(result);
         }
 
         [Authorize(Roles = "Admin")]

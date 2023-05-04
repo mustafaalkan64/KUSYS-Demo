@@ -1,0 +1,96 @@
+﻿@model IEnumerable<KUSYS_Demo.Core.Models.Student>
+
+@{
+    ViewData["Title"] = "Öğrenci Listesi";
+    Layout = "_LayoutNew";
+}
+
+
+
+<div class="row">
+    <div class="col-12">
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"></h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>StudentId</th>
+                            <th>FirstName</th>
+                            <th>LastName</th>
+                            <th>Birthday</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var item in Model)
+                        {
+                            <tr>
+                                <td>@item.StudentId</td>
+                                <td>@item.FirstName</td>
+                                <td>@item.LastName</td>
+                                <td>@item.Birthday.Value.ToString("dd.MM.yyyy")</td>
+                                <td><button type="button" class="btn btn-block btn-warning btn-sm">Update</button></td>
+                                <td><button type="button" class="btn btn-block btn-danger btn-sm">Delete</button></td>
+                                <td><button type="button" class="btn btn-block btn-info btn-sm">Detail</button></td>
+                            </tr>
+                        }
+                        
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>StudentId</th>
+                            <th>FirstName</th>
+                            <th>LastName</th>
+                            <th>Birthday</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+</div>
+
+<!-- jQuery -->
+<script src="~/WebCore/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="~/WebCore/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables -->
+<script src="~/WebCore/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/WebCore/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/WebCore/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/WebCore/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<!-- AdminLTE App -->
+<script src="~/WebCore/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="~/WebCore/dist/js/demo.js"></script>
+<!-- page script -->
+<script>
+    $(document).ready(function() {
+        $("#example1").DataTable({
+            "responsive": true,
+            "autoWidth": false,
+        });
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
+    });
+</script>
+
