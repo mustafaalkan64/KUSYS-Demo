@@ -9,19 +9,19 @@ using System.Threading.Tasks;
 
 namespace KUSYS_Demo.Services
 {
-    public class StudentsService : IStudentsService
+    public class StudentService : IStudentService
     {
         public IUnitOfWork _unitOfWork;
 
-        public StudentsService(IUnitOfWork unitOfWork)
+        public StudentService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
-        public async Task Create(Students student)
+        public async Task Create(Student student)
         {
             if (student != null)
             {
-                await _unitOfWork.Students.Add(student);
+                await _unitOfWork.Student.Add(student);
 
                 await _unitOfWork.CompleteAsync();
             }
@@ -31,43 +31,43 @@ namespace KUSYS_Demo.Services
         {
             if (studentId > 0)
             {
-                var student = await _unitOfWork.Students.GetById(studentId);
+                var student = await _unitOfWork.Student.GetById(studentId);
                 if (student != null)
                 {
-                    _unitOfWork.Students.Delete(student);
+                    _unitOfWork.Student.Delete(student);
                     await _unitOfWork.CompleteAsync();
 
                 }
             }
         }
 
-        public async Task<IEnumerable<Students>> GetAll()
+        public async Task<IEnumerable<Student>> GetAll()
         {
-            return await _unitOfWork.Students.GetAll();
+            return await _unitOfWork.Student.GetAll();
         }
 
-        public async Task<Students> GetProductById(int studentId)
+        public async Task<Student> GetProductById(int studentId)
         {
             if (studentId > 0)
             {
-                var student = await _unitOfWork.Students.GetById(studentId);
+                var student = await _unitOfWork.Student.GetById(studentId);
                 if (student != null) return student;
             }
             return null;
         }
 
-        public async Task Update(Students studentModel)
+        public async Task Update(Student studentModel)
         {
             if (studentModel != null)
             {
-                var student = await _unitOfWork.Students.GetById(studentModel.StudentId);
+                var student = await _unitOfWork.Student.GetById(studentModel.StudentId);
                 if (student != null)
                 {
                     student.FirstName = studentModel.FirstName;
                     student.LastName = studentModel.LastName;
                     student.Birthday = studentModel.Birthday;
 
-                    _unitOfWork.Students.Update(student);
+                    _unitOfWork.Student.Update(student);
 
                     await _unitOfWork.CompleteAsync();
                 }

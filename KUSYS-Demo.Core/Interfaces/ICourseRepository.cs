@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace KUSYS_Demo.Core.Interfaces
 {
-    public interface ICourseRepository : IGenericRepository<Courses>
+    public interface ICourseRepository : IGenericRepository<Course>
     {
     }
 }

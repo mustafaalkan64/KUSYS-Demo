@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace KUSYS_Demo.Infastructure.Repositories
 {
-    public class CoursesRepository : GenericRepository<Courses>, ICourseRepository
+    public class CoursesRepository : GenericRepository<Course>, ICourseRepository
     {
         public CoursesRepository(ApplicationDbContext dbContext) : base(dbContext)
         {

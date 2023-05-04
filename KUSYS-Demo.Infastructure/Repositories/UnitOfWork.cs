@@ -10,16 +10,16 @@ namespace KUSYS_Demo.Infastructure.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _dbContext;
-        public IStudentRepository Students { get; }
-        public ICourseRepository Courses { get; }
+        public IStudentRepository Student { get; }
+        public ICourseRepository Course { get; }
 
         public UnitOfWork(ApplicationDbContext dbContext,
                             IStudentRepository StudentsRepository,
                             ICourseRepository CoursesRepository)
         {
             _dbContext = dbContext;
-            Students = StudentsRepository;
-            Courses = CoursesRepository;
+            Student = StudentsRepository;
+            Course = CoursesRepository;
         }
 
         public async Task CompleteAsync()

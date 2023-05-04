@@ -8,8 +8,8 @@ namespace KUSYS_Demo.Core.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
-        IStudentRepository Students { get; }
-        ICourseRepository Courses { get; }
+        IStudentRepository Student { get; }
+        ICourseRepository Course { get; }
         Task CompleteAsync();
     }
 }

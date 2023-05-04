@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace KUSYS_Demo.Services.Interfaces
 {
-    public interface IStudentsService
+    public interface IStudentService
     {
-        Task Create(Students student);
+        Task Create(Student student);
 
-        Task<IEnumerable<Students>> GetAll();
+        Task<IEnumerable<Student>> GetAll();
 
-        Task<Students> GetProductById(int productId);
+        Task<Student> GetProductById(int productId);
 
-        Task Update(Students student);
+        Task Update(Student student);
 
         Task Delete(int studentId);
     }

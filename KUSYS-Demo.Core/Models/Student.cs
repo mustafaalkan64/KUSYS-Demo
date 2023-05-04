@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 
 namespace KUSYS_Demo.Core.Models
 {
-    public class Students
+    public class Student
     {
         [Key]
         public int StudentId { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public DateTime? Birthday { get; set; }
+        public IList<StudentCourse> StudentCourses { get; set; }
     }
 }
