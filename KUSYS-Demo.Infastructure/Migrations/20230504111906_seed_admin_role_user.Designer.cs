@@ -4,6 +4,7 @@ using KUSYS_Demo.Infastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KUSYS_Demo.Infastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230504111906_seed_admin_role_user")]
+    partial class seed_admin_role_user
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,14 +96,14 @@ namespace KUSYS_Demo.Infastructure.Migrations
                         {
                             Id = "02174cf0–9412–4cfe-afbf-59f706d72cf6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "878c3a65-d0c8-49f6-b34b-2696a402d324",
+                            ConcurrencyStamp = "30659213-f12d-43eb-aba5-ad00b41e0b34",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN@GMAİL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAELN1bSrutfWbnjkYZxsBL2NvXGp6mEwDpvZIiprySq/ripvZ4MAV+TUwpskJLtSOsQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFUeLIxChq1iOvSfTxHIpn9XsBeo6gmU4K1kLpQiUZcVkOmnMcge1s3JPgjvQDWeeQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "6f495cb5-57e4-4093-9a20-658c5e4ee535",
+                            SecurityStamp = "aa9e1d90-f627-4383-806f-ccfe8f0c89e8",
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com"
                         });
@@ -235,13 +237,6 @@ namespace KUSYS_Demo.Infastructure.Migrations
                             ConcurrencyStamp = "341743f0-asd2–42de-afbf-59kmkkmk72cf6",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "53cda9e5-57d6-40e8-bf15-ae1ee769276d",
-                            ConcurrencyStamp = "53cda9e5-57d6-40e8-bf15-ae1ee769276d",
-                            Name = "User",
-                            NormalizedName = "USER"
                         });
                 });
 

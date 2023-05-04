@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KUSYS_Demo.Infastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230504060806_StudentCourse_Table_Created")]
-    partial class StudentCourse_Table_Created
+    [Migration("20230504110333_v1")]
+    partial class v1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -94,11 +94,15 @@ namespace KUSYS_Demo.Infastructure.Migrations
 
             modelBuilder.Entity("KUSYS_Demo.Core.Models.Course", b =>
                 {
-                    b.Property<int>("CourseId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CourseId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CourseId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CourseName")
                         .IsRequired()
@@ -108,9 +112,39 @@ namespace KUSYS_Demo.Infastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CourseId");
+                    b.HasKey("Id");
 
                     b.ToTable("Courses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CourseId = "CSI101",
+                            CourseName = "Introduction to Computer Science",
+                            Description = "Introduction to Computer Science"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CourseId = "CSI102",
+                            CourseName = "Algorithms",
+                            Description = "Algorithms"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CourseId = "MAT101",
+                            CourseName = "Calculus",
+                            Description = "Calculus"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CourseId = "PHY101",
+                            CourseName = "Physics",
+                            Description = "Physics"
+                        });
                 });
 
             modelBuilder.Entity("KUSYS_Demo.Core.Models.Student", b =>

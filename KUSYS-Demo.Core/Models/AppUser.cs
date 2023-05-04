@@ -9,6 +9,6 @@ namespace KUSYS_Demo.Core.Models
 {
     public class AppUser: IdentityUser
     {
-        public int StudentId { get; set; }
+        public int? StudentId { get; set; }
     }
 }
