@@ -256,9 +256,6 @@
                                 </p>
                             </a>
 
-
-                            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                            {
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
                                         <a href="/Students/List" class="nav-link">
@@ -266,14 +263,18 @@
                                             <p>Öğrenci Listele</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="/Students/Create" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Öğrenci Ekle</p>
-                                        </a>
-                                    </li>
+                                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                    {
+                                        <li class="nav-item">
+                                            <a href="/Students/Create" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Öğrenci Ekle</p>
+                                            </a>
+                                        </li>                                        
+                                    }
+
                                 </ul>
-                            }
+
 
                         </li>
                         @*<li class="nav-item">
@@ -908,6 +909,38 @@
     <script src="~/WebCore/dist/js/demo.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="~/WebCore/dist/js/pages/dashboard.js"></script>
+
+    <!-- jQuery -->
+    <script src="~/WebCore/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="~/WebCore/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables -->
+    <script src="~/WebCore/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/WebCore/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/WebCore/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/WebCore/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/WebCore/dist/js/adminlte.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="~/WebCore/dist/js/demo.js"></script>
+
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true,
+                "autoWidth": false,
+            });
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
+    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

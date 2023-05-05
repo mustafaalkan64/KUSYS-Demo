@@ -24,9 +24,9 @@ namespace KUSYS_Demo.UI.Controllers
 
         public IActionResult Index()
         {
-            AppUser CurrentUser = userManager.FindByNameAsync(User.Identity.Name).Result;
-            bool UserIsAdmin = userManager.IsInRoleAsync(CurrentUser, "Admin").Result;
-            var result = _studentService.GetAll();
+            //AppUser CurrentUser = userManager.FindByNameAsync(User.Identity.Name).Result;
+            //bool UserIsAdmin = userManager.IsInRoleAsync(CurrentUser, "Admin").Result;
+            //var result = _studentService.GetAll();
             return View();
         }
 

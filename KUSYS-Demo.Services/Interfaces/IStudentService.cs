@@ -13,7 +13,7 @@ namespace KUSYS_Demo.Services.Interfaces
 
         Task<IEnumerable<Student>> GetAll();
 
-        Task<Student> GetProductById(int productId);
+        Task<Student> GetStudentById(int productId);
 
         Task Update(Student student);
 

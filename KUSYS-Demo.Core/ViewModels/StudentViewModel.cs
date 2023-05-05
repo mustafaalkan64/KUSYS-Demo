@@ -31,5 +31,8 @@ namespace KUSYS_Demo.Core.ViewModels
 
         [Required(ErrorMessage = "Birthday is Required")]
         public DateTime? Birthday { get; set; }
+
+        public string? BirthdayStr { get; set; }
+
     }
 }

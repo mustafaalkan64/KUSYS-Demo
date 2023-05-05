@@ -46,7 +46,7 @@ namespace KUSYS_Demo.Services
             return await _unitOfWork.Student.GetAll();
         }
 
-        public async Task<Student> GetProductById(int studentId)
+        public async Task<Student> GetStudentById(int studentId)
         {
             if (studentId > 0)
             {

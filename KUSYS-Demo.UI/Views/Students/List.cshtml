@@ -29,19 +29,29 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach(var item in Model)
+                        @foreach (var item in Model)
                         {
                             <tr>
                                 <td>@item.StudentId</td>
                                 <td>@item.FirstName</td>
                                 <td>@item.LastName</td>
                                 <td>@item.Birthday.Value.ToString("dd.MM.yyyy")</td>
-                                <td><button type="button" class="btn btn-block btn-warning btn-sm">Update</button></td>
-                                <td><button type="button" class="btn btn-block btn-danger btn-sm">Delete</button></td>
-                                <td><button type="button" class="btn btn-block btn-info btn-sm">Detail</button></td>
+                                <td>
+                                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                    {
+                                        <a type="button" class="btn btn-block btn-warning btn-sm" href="/Students/Update/@item.StudentId">Update</a>
+                                    }
+                                </td>
+                                <td>
+                                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                    {
+                                        <button type="button" class="btn btn-block btn-danger btn-sm" onclick="deleteStudent(@item.StudentId)">Delete</button>
+                                    }
+                                </td>
+                                <td><button type="button" id="detail" class="btn btn-block btn-info btn-sm" onclick="getDetail(@item.StudentId)">Detail</button></td>
                             </tr>
                         }
-                        
+
                     </tbody>
                     <tfoot>
                         <tr>
@@ -62,35 +72,99 @@
     </div>
 </div>
 
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Öğrenci Detay</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>First Name : <span class="firstname"></span></p>
+                <p>Last Name : <span class="lastname"></span> </p>
+                <p>Birthday : <span class="birthday"></span></p>
+                <p>Username : <span class="userName"></span></p>
+                <p>Email : <span class="email"></span></p>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 <!-- jQuery -->
 <script src="~/WebCore/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="~/WebCore/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- DataTables -->
-<script src="~/WebCore/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="~/WebCore/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="~/WebCore/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-<script src="~/WebCore/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-<!-- AdminLTE App -->
-<script src="~/WebCore/dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="~/WebCore/dist/js/demo.js"></script>
-<!-- page script -->
-<script>
-    $(document).ready(function() {
-        $("#example1").DataTable({
-            "responsive": true,
-            "autoWidth": false,
-        });
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-            "responsive": true,
-        });
-    });
-</script>
 
+<script type="text/javascript">
+
+         function getDetail(id) {
+            $.ajax({
+                type: "GET",
+                url: "/Students/GetById?id=" + id,
+                dataType: "json",
+                encode: true,
+            }).done(function (data) {
+                $(".firstname").text(data.firstName);
+                $(".lastname").text(data.lastName);
+                $(".birthday").text(data.birthdayStr);
+                $(".userName").text(data.userName);
+                $(".email").text(data.email);
+                $('#modal-default').modal('show');
+            }).fail(function (data) {
+                $(document).Toasts('create', {
+                    class: 'bg-danger',
+                    title: 'Fail!',
+                    subtitle: '',
+                    body: "Öğrenci Bilgileri Getirilirken Hata ile Karşılaşıldı!",
+                    delay: 750,
+                });
+            });
+         }
+            
+
+
+    function deleteStudent(studentId) {
+        if (confirm("Silmek İstediğinizden Emin misiniz!") == true) {
+            $.ajax({
+                type: "DELETE",
+                url: "/Students/Delete?studentId=" + studentId,
+                dataType: "json",
+                encode: true,
+            }).done(function (data) {
+                if (data.status == true) {
+                    $(document).Toasts('create', {
+                        class: 'bg-success',
+                        title: 'Success',
+                        subtitle: '',
+                        body: data.message,
+                        delay: 0,
+                    });
+                    location.reload();
+                }
+                else {
+                    $(document).Toasts('create', {
+                        class: 'bg-danger',
+                        title: 'Fail!',
+                        subtitle: '',
+                        body: data.message,
+                        delay: 750,
+                    })
+                }
+            }).fail(function (data) {
+                $(document).Toasts('create', {
+                    class: 'bg-danger',
+                    title: 'Fail!',
+                    subtitle: '',
+                    body: "Öğrenci Silerken Hata ile Karşılaşıldı!",
+                    delay: 750,
+                });
+            });
+        }
+       
+    }
+</script>
