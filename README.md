@@ -29,6 +29,7 @@ List matched course and students.
 
 When you create a new student, a new user will be created together.
 And default user password will be **"Password_123"**
+You can also change it from AppSetting.json file
 
 So, you can login with email specified and default password above.
 
