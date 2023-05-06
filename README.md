@@ -41,11 +41,15 @@ So, you can login with email specified and default password above.
 - Unit of Work
 - Admin LTE 3 Boostrap Admin UI Templates
 
+## Screenshots
 
-
-
-
-
+![alt text](https://github.com/mustafaalkan64/KUSYS-Demo/blob/master/KUSYS-Demo.UI/ScreenShots/1.PNG)
+![alt text](https://github.com/mustafaalkan64/KUSYS-Demo/blob/master/KUSYS-Demo.UI/ScreenShots/2.PNG)
+![alt text](https://github.com/mustafaalkan64/KUSYS-Demo/blob/master/KUSYS-Demo.UI/ScreenShots/3.PNG)
+![alt text](https://github.com/mustafaalkan64/KUSYS-Demo/blob/master/KUSYS-Demo.UI/ScreenShots/4.PNG)
+![alt text](https://github.com/mustafaalkan64/KUSYS-Demo/blob/master/KUSYS-Demo.UI/ScreenShots/5.PNG)
+![alt text](https://github.com/mustafaalkan64/KUSYS-Demo/blob/master/KUSYS-Demo.UI/ScreenShots/6.PNG)
+![alt text](https://github.com/mustafaalkan64/KUSYS-Demo/blob/master/KUSYS-Demo.UI/ScreenShots/7.PNG)
 
 
 
