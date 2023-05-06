@@ -26,16 +26,25 @@ namespace KUSYS_Demo.Services
             await _unitOfWork.StudentCourse.AddMultipleStudentCourses(studentId, courseIds);
         }
 
+        /// <summary>
+        /// Get Courses By Student Id
+        /// </summary>
         public async Task<IEnumerable<StudentCourses>> GetCoursesByStudentId(int studentId)
         {
             return await _unitOfWork.StudentCourse.GetCoursesByStudentId(studentId);
         }
 
+        /// <summary>
+        /// Get All Student Courses
+        /// </summary>
         public async Task<IEnumerable<StudentCourses>> GetAllStudentCoursesAsync()
         {
             return await _unitOfWork.StudentCourse.GetAllStudentCoursesAsync();
         }
-  
+
+        /// <summary>
+        /// Remove Student Courses By Student Id
+        /// </summary>
         public async Task RemoveStudentCoursesByStudentIdAsync(int studentId)
         {
             await _unitOfWork.StudentCourse.RemoveStudentCoursesByStudentIdAsync(studentId);
