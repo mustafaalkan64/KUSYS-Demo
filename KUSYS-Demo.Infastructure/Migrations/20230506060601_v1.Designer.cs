@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KUSYS_Demo.Infastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230504112111_seed_user_role")]
-    partial class seed_user_role
+    [Migration("20230506060601_v1")]
+    partial class v1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -96,14 +96,15 @@ namespace KUSYS_Demo.Infastructure.Migrations
                         {
                             Id = "02174cf0–9412–4cfe-afbf-59f706d72cf6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "878c3a65-d0c8-49f6-b34b-2696a402d324",
+                            ConcurrencyStamp = "7af1a747-c60f-4169-b307-3722ddde402c",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
-                            NormalizedUserName = "ADMIN@GMAİL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAELN1bSrutfWbnjkYZxsBL2NvXGp6mEwDpvZIiprySq/ripvZ4MAV+TUwpskJLtSOsQ==",
+                            NormalizedEmail = "ADMIN@GMAIL.COM",
+                            NormalizedUserName = "ADMIN@GMAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDfT7XzrM3O618cljLoQl2M3EjF58F0EtKZqS2fX0qerzCCw84B+piDHzXlHfglADg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "6f495cb5-57e4-4093-9a20-658c5e4ee535",
+                            SecurityStamp = "851092c5-e373-456a-9f3b-647d245dac13",
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com"
                         });
@@ -186,7 +187,7 @@ namespace KUSYS_Demo.Infastructure.Migrations
                     b.ToTable("Students");
                 });
 
-            modelBuilder.Entity("KUSYS_Demo.Core.Models.StudentCourse", b =>
+            modelBuilder.Entity("KUSYS_Demo.Core.Models.StudentCourses", b =>
                 {
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
@@ -201,7 +202,7 @@ namespace KUSYS_Demo.Infastructure.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("StudentCourse");
+                    b.ToTable("StudentCourses");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -240,8 +241,8 @@ namespace KUSYS_Demo.Infastructure.Migrations
                         },
                         new
                         {
-                            Id = "53cda9e5-57d6-40e8-bf15-ae1ee769276d",
-                            ConcurrencyStamp = "53cda9e5-57d6-40e8-bf15-ae1ee769276d",
+                            Id = "4084acb6-a3b4-410a-98bb-473b02f9afcd",
+                            ConcurrencyStamp = "4084acb6-a3b4-410a-98bb-473b02f9afcd",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -360,7 +361,7 @@ namespace KUSYS_Demo.Infastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("KUSYS_Demo.Core.Models.StudentCourse", b =>
+            modelBuilder.Entity("KUSYS_Demo.Core.Models.StudentCourses", b =>
                 {
                     b.HasOne("KUSYS_Demo.Core.Models.Course", "Course")
                         .WithMany("StudentCourses")

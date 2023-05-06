@@ -1,0 +1,112 @@
+﻿@model KUSYS_Demo.Core.ViewModels.StudentCourseViewModel
+
+@{
+    ViewData["Title"] = "Kurslar";
+    Layout = "_LayoutNew";
+}
+
+<div class="row">
+    <div class="col-12">
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"></h3>
+            </div>
+            <input type="hidden" id="studentId" value="@Model.StudentId" />
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>CourseId</th>
+                            <th>CourseName</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Courses)
+                        {
+                            <tr>
+                                <td><div style="text-align:center"><input class="form-check-input course-checkbox" id="@(item.Id)" type="checkbox" checked="@item.Checked"></div>
+                                <td>@item.CourseId</td>
+                                <td>@item.CourseName</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th></th>
+                            <th>CourseId</th>
+                            <th>CourseName</th>
+                        </tr>
+                    </tfoot>
+                </table>
+
+            </div>
+            <div class="card-footer">
+                <button type="button" class="btn btn-success" onclick="Save()">Save</button>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+</div>
+
+<script src="~/WebCore/plugins/jquery/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+    function Save() {
+
+        var checkItems = [];
+        var checkeds = $('.course-checkbox:checkbox:checked');
+        $('.course-checkbox:checkbox:checked').each(function (item) {
+            checkItems.push($(this).attr("id"));
+        });
+
+        var saveStudentCourseViewModel = {
+            studentId: $("#studentId").val(),
+            courseIds: checkItems
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/StudentCourses/SaveStudentCourses",
+            data: saveStudentCourseViewModel,
+            dataType: "json",
+            encode: true,
+        }).done(function (data) {
+            if (data.status == true) {
+                $(document).Toasts('create', {
+                    class: 'bg-success',
+                    title: 'Success',
+                    subtitle: '',
+                    body: data.message,
+                    delay: 750,
+                })
+            }
+            else {
+                $(document).Toasts('create', {
+                    class: 'bg-danger',
+                    title: 'Fail!',
+                    subtitle: '',
+                    body: data.message,
+                    delay: 750,
+                })
+            }
+            console.log(data);
+        }).fail(function (data) {
+            $(document).Toasts('create', {
+                class: 'bg-danger',
+                title: 'Fail!',
+                subtitle: '',
+                body: "Öğrenci Bilgileri Kaydedilirken Hata ile Karşılaşıldı!",
+                delay: 750,
+            });
+        });
+
+    }
+
+   
+</script>

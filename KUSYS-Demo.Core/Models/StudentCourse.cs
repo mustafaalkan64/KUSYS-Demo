@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace KUSYS_Demo.Core.Models
 {
-    public class StudentCourse
+    public class StudentCourses
     {
         [Key]
         public int StudentCourseId { get; set; }

@@ -17,27 +17,30 @@ namespace KUSYS_Demo.UI.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IConfiguration _configuration;
         private readonly IStudentService _studentService;
+        private readonly IStudentCourseService _studentCourseService;
 
-        public StudentsController(ILogger<HomeController> logger, IStudentService studentService, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<IdentityRole> roleManager) : base(userManager, signInManager, roleManager)
+        public StudentsController(ILogger<HomeController> logger, IStudentService studentService, IStudentCourseService studentCourseService, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<IdentityRole> roleManager) : base(userManager, signInManager, roleManager)
         {
             _logger = logger;
             _studentService = studentService;
+            _studentCourseService = studentCourseService;
         }
 
         [Authorize(Roles = "Admin, User")]
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> Index()
         {
+            // TODO: Escape from Magic String and move to Consts
             if(User.IsInRole("Admin"))
             {
-                var result = await _studentService.GetAll();
+                var result = await _studentService.GetAllAsync();
                 return View(result);
             }
             else
             {
-
+                // If user is in User Role, list only himself/herself information
                 AppUser currentUser = userManager.FindByNameAsync(User.Identity.Name).Result;
                 var studentId = currentUser.StudentId;
-                var student = await _studentService.GetStudentById(studentId.Value);
+                var student = await _studentService.GetByIdAsync(studentId.Value);
                 var result = new List<Student>() {  student };
                 return View(result);
             }
@@ -47,14 +50,15 @@ namespace KUSYS_Demo.UI.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
+            ViewBag.Title = "Yeni Öğrenci Ekleme";
             return View(new StudentViewModel());
         }
 
         [Authorize(Roles = "Admin, User")]
         public async Task<JsonResult> GetById(int id)
         {
-            var student = await _studentService.GetStudentById(id);
-            var user = userManager.Users.FirstOrDefault(x => x.StudentId == id);
+            var student = await _studentService.GetByIdAsync(id); // Get Student By Id
+            var user = userManager.Users.FirstOrDefault(x => x.StudentId == id); // Get User By Student Id
             StudentViewModel studentViewModel = new StudentViewModel()
             {
                 FirstName = student.FirstName,
@@ -70,10 +74,10 @@ namespace KUSYS_Demo.UI.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Update(int id)
         {
-            var student = _studentService.GetStudentById(id).Result;
+            var student = _studentService.GetByIdAsync(id).Result; // Check If Student Exists
             if (student != null)
             {
-                var user = userManager.Users.FirstOrDefault(x => x.StudentId == id);
+                var user = userManager.Users.FirstOrDefault(x => x.StudentId == id); // Check If User Exists
                 if (user != null)
                 {
                     StudentViewModel studentViewModel = new StudentViewModel()
@@ -85,18 +89,19 @@ namespace KUSYS_Demo.UI.Controllers
                         UserName = user.UserName,
                         StudentId = id,
                     };
+                    ViewBag.Title = "Öğrenci Düzenleme";
                     return View("Create", studentViewModel);
                 }
                 else
                 {
-                    ViewBag.Message = "User Not Found";
-                    return View(new StudentViewModel());
+                    ViewBag.Error = "User Not Found";
+                    return View("Create", new StudentViewModel());
                 }
             }
             else
             {
-                ViewBag.Message = "Student Not Found";
-                return View(new StudentViewModel());
+                ViewBag.Error = "Student Not Found";
+                return View("Create", new StudentViewModel());
             }
         }
 
@@ -114,7 +119,7 @@ namespace KUSYS_Demo.UI.Controllers
                         FirstName = studentViewModel.FirstName,
                         LastName = studentViewModel.LastName,
                     };
-                    await _studentService.Create(student);
+                    await _studentService.CreateAsync(student);
 
                     AppUser user = new AppUser();
                     user.UserName = studentViewModel.UserName;
@@ -123,17 +128,20 @@ namespace KUSYS_Demo.UI.Controllers
                     user.NormalizedEmail = studentViewModel.Email.ToUpper();
                     user.NormalizedUserName = studentViewModel.UserName.ToUpper();
 
+                    // Check any email exists with same email address
                     if (userManager.Users.Any(u => u.Email == studentViewModel.Email))
                     {
-                        return Json(new { Message = "Email Address Has Already Been Taken", Status = false });
+                        return Json(new { Message = "Email Adres Zaten Kayıtlı!", Status = false });
                     }
 
+                    // Create a new Application User
                     IdentityResult result = await userManager.CreateAsync(user, "Password_123");
 
                     if (result.Succeeded)
                     {
+                        // Add User Role to User
                         await userManager.AddToRoleAsync(user, "User");
-                        return Json(new { Message = "New Student Created Successfully", Status = true });
+                        return Json(new { Message = "Yeni Öğrenci Başarılı ile Kaydedildi", Status = true });
                     }
                     else
                     {
@@ -143,12 +151,12 @@ namespace KUSYS_Demo.UI.Controllers
                 }
                 else
                 {
-                    var student = _studentService.GetStudentById(studentViewModel.StudentId).Result;
+                    var student = _studentService.GetByIdAsync(studentViewModel.StudentId).Result;
                     if(student != null) {
                         student.FirstName = studentViewModel.FirstName;
                         student.LastName = studentViewModel.LastName;
                         student.Birthday = studentViewModel.Birthday;
-                        await _studentService.Update(student);
+                        await _studentService.UpdateAsync(student);
 
                         var user = userManager.Users.FirstOrDefault(x => x.StudentId == studentViewModel.StudentId);
                         if(user != null)
@@ -158,12 +166,12 @@ namespace KUSYS_Demo.UI.Controllers
                             // Apply the changes if any to the db
                             await userManager.UpdateAsync(user);
                         }
-                        return Json(new { Message = "Student Updated Successfully", Status = true });
+                        return Json(new { Message = "Öğrenci Başarıyla Güncellendi", Status = true });
 
                     }
                     else
                     {
-                        return Json(new { Message = "Student Not Found", Status = false });
+                        return Json(new { Message = "Öğrenci Bulunamadı!", Status = false });
                     }
                 }
                 
@@ -182,19 +190,23 @@ namespace KUSYS_Demo.UI.Controllers
         [HttpDelete]
         public async Task<JsonResult> Delete(int studentId)
         {
-            var student = _studentService.GetStudentById(studentId).Result;
+            var student = _studentService.GetByIdAsync(studentId).Result;
             if (student != null)
             {
-                await _studentService.Delete(studentId);
+                // Remove Student Courses
+                await _studentCourseService.RemoveStudentCoursesByStudentIdAsync(studentId);
+
+                // Remove Student
+                await _studentService.RemoveAsync(studentId);
                 var user = userManager.Users.Where(x => x.StudentId == studentId).FirstOrDefault();
                 if (user != null)
                 {
-                    await userManager.RemoveFromRoleAsync(user, "User");
-                    await userManager.DeleteAsync(user);
+                    await userManager.RemoveFromRoleAsync(user, "User"); // Remove User's roles
+                    await userManager.DeleteAsync(user); // Remove Application User
                 }
-                return Json(new { Status = true, Message = "Student Removed" });
+                return Json(new { Status = true, Message = "Öğrenci Başarıyla Silindi!" });
             }
-            else { return Json(new { Status = false, Message = "Student Could Not Found" }); }
+            else { return Json(new { Status = false, Message = "Öğrenci Bulunamadı!" }); }
 
         }
 

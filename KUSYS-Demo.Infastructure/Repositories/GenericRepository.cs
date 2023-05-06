@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,24 +18,39 @@ namespace KUSYS_Demo.Infastructure.Repositories
             _dbContext = context;
         }
 
-        public async Task<T> GetById(int id)
+        public async Task<T> GetByIdAsync(int id)
         {
             return await _dbContext.Set<T>().FindAsync(id);
         }
 
-        public async Task<IEnumerable<T>> GetAll()
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
             return await _dbContext.Set<T>().ToListAsync();
         }
 
-        public async Task Add(T entity)
+        public async Task AddAsync(T entity)
         {
             await _dbContext.Set<T>().AddAsync(entity);
         }
 
-        public void Delete(T entity)
+        public async Task AddRangeAsync(IEnumerable<T> entities)
+        {
+           await _dbContext.Set<T>().AddRangeAsync(entities);
+        }
+
+        public IEnumerable<T> Find(Expression<Func<T, bool>> expression)
+        {
+            return _dbContext.Set<T>().Where(expression);
+        }
+
+        public void Remove(T entity)
         {
             _dbContext.Set<T>().Remove(entity);
+        }
+
+        public void RemoveRange(IEnumerable<T> entities)
+        {
+            _dbContext.Set<T>().RemoveRange(entities);
         }
 
         public void Update(T entity)

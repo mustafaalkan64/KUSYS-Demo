@@ -26,6 +26,7 @@
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,18 +38,22 @@
                                 <td>@item.LastName</td>
                                 <td>@item.Birthday.Value.ToString("dd.MM.yyyy")</td>
                                 <td>
-                                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                                    {
-                                        <a type="button" class="btn btn-block btn-warning btn-sm" href="/Students/Update/@item.StudentId">Update</a>
-                                    }
+                                    <a type="button" target="_blank" class="btn btn-block btn-success btn-sm" href="/StudentCourses/Index/@item.StudentId"><i class="fas fa-edit"></i>Courses</a>
                                 </td>
                                 <td>
                                     @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                                     {
-                                        <button type="button" class="btn btn-block btn-danger btn-sm" onclick="deleteStudent(@item.StudentId)">Delete</button>
+                                        <a type="button" target="_blank" class="btn btn-block btn-warning btn-sm" href="/Students/Update/@item.StudentId"><i class="fas fa-edit"></i>Edit</a>
                                     }
                                 </td>
-                                <td><button type="button" id="detail" class="btn btn-block btn-info btn-sm" onclick="getDetail(@item.StudentId)">Detail</button></td>
+                                <td><button type="button" id="detail" class="btn btn-block btn-info btn-sm" onclick="getDetail(@item.StudentId)"><i class="fas fa-eye"></i>Detail</button>
+                                </td>
+                                <td>
+                                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                    {
+                                        <button type="button" class="btn btn-block btn-danger btn-sm" onclick="deleteStudent(@item.StudentId)"><i class="fas fa-trash"></i>Delete</button>
+                                    }
+                                </td>
                             </tr>
                         }
 
@@ -59,6 +64,7 @@
                             <th>FirstName</th>
                             <th>LastName</th>
                             <th>Birthday</th>
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -96,8 +102,7 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-<!-- /.modal -->
-<!-- jQuery -->
+
 <script src="~/WebCore/plugins/jquery/jquery.min.js"></script>
 
 <script type="text/javascript">

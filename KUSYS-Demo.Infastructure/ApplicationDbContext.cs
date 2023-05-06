@@ -19,6 +19,7 @@ namespace KUSYS_Demo.Infastructure
 
         public DbSet<Student> Students { get; set; }
         public DbSet<Course> Courses { get; set; }
+        public DbSet<StudentCourses> StudentCourses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -76,15 +77,15 @@ namespace KUSYS_Demo.Infastructure
                 UserId = ADMIN_ID
             });
 
-            modelBuilder.Entity<StudentCourse>().HasKey(sc => new { sc.StudentId, sc.CourseId });
+            modelBuilder.Entity<StudentCourses>().HasKey(sc => new { sc.StudentId, sc.CourseId });
 
-            modelBuilder.Entity<StudentCourse>()
-            .HasOne<Student>(sc => sc.Student)
-            .WithMany(s => s.StudentCourses)
-            .HasForeignKey(sc => sc.StudentId);
+            modelBuilder.Entity<StudentCourses>()
+                .HasOne<Student>(sc => sc.Student)
+                .WithMany(s => s.StudentCourses)
+                .HasForeignKey(sc => sc.StudentId);
 
 
-            modelBuilder.Entity<StudentCourse>()
+            modelBuilder.Entity<StudentCourses>()
                 .HasOne<Course>(sc => sc.Course)
                 .WithMany(s => s.StudentCourses)
                 .HasForeignKey(sc => sc.CourseId);

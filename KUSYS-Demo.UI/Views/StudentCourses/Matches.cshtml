@@ -1,0 +1,58 @@
+﻿@model IEnumerable<KUSYS_Demo.Core.Models.StudentCourses>
+
+@{
+    ViewData["Title"] = "Öğrenci Kurs Eşleşmeleri";
+    Layout = "_LayoutNew";
+}
+
+<div class="row">
+    <div class="col-12">
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"></h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>StudentId</th>
+                            <th>FirstName</th>
+                            <th>LastName</th>
+                            <th>Birthday</th>
+                            <th>Course Id</th>
+                            <th>Course Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Student.StudentId</td>
+                                <td>@item.Student.FirstName</td>
+                                <td>@item.Student.LastName</td>
+                                <td>@item.Student.Birthday.Value.ToString("dd.MM.yyyy")</td>
+                                <td>@item.Course.CourseId</td>
+                                <td>@item.Course.CourseName</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>StudentId</th>
+                            <th>FirstName</th>
+                            <th>LastName</th>
+                            <th>Birthday</th>
+                            <th>Course Id</th>
+                            <th>Course Name</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+</div>

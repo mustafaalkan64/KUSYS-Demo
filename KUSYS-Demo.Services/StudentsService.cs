@@ -17,50 +17,49 @@ namespace KUSYS_Demo.Services
         {
             _unitOfWork = unitOfWork;
         }
-        public async Task Create(Student student)
+        public async Task CreateAsync(Student student)
         {
             if (student != null)
             {
-                await _unitOfWork.Student.Add(student);
+                await _unitOfWork.Student.AddAsync(student);
 
                 await _unitOfWork.CompleteAsync();
             }
         }
 
-        public async Task Delete(int studentId)
+        public async Task RemoveAsync(int studentId)
         {
             if (studentId > 0)
             {
-                var student = await _unitOfWork.Student.GetById(studentId);
+                var student = await _unitOfWork.Student.GetByIdAsync(studentId);
                 if (student != null)
                 {
-                    _unitOfWork.Student.Delete(student);
+                    _unitOfWork.Student.Remove(student);
                     await _unitOfWork.CompleteAsync();
-
                 }
             }
         }
 
-        public async Task<IEnumerable<Student>> GetAll()
+        public async Task<IEnumerable<Student>> GetAllAsync()
         {
-            return await _unitOfWork.Student.GetAll();
+            return await _unitOfWork.Student.GetAllAsync();
         }
 
-        public async Task<Student> GetStudentById(int studentId)
+        public async Task<Student> GetByIdAsync(int studentId)
         {
             if (studentId > 0)
             {
-                var student = await _unitOfWork.Student.GetById(studentId);
+                var student = await _unitOfWork.Student.GetByIdAsync(studentId);
                 if (student != null) return student;
             }
             return null;
         }
 
-        public async Task Update(Student studentModel)
+        public async Task UpdateAsync(Student studentModel)
         {
             if (studentModel != null)
             {
-                var student = await _unitOfWork.Student.GetById(studentModel.StudentId);
+                var student = await _unitOfWork.Student.GetByIdAsync(studentModel.StudentId);
                 if (student != null)
                 {
                     student.FirstName = studentModel.FirstName;

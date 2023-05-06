@@ -9,14 +9,14 @@ namespace KUSYS_Demo.Services.Interfaces
 {
     public interface IStudentService
     {
-        Task Create(Student student);
+        Task CreateAsync(Student student);
 
-        Task<IEnumerable<Student>> GetAll();
+        Task<IEnumerable<Student>> GetAllAsync();
 
-        Task<Student> GetStudentById(int productId);
+        Task<Student> GetByIdAsync(int productId);
 
-        Task Update(Student student);
+        Task UpdateAsync(Student student);
 
-        Task Delete(int studentId);
+        Task RemoveAsync(int studentId);
     }
 }

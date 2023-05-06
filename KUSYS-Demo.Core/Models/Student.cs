@@ -14,6 +14,6 @@ namespace KUSYS_Demo.Core.Models
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public DateTime? Birthday { get; set; }
-        public IList<StudentCourse> StudentCourses { get; set; }
+        public IList<StudentCourses> StudentCourses { get; set; }
     }
 }

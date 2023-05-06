@@ -10,6 +10,7 @@ namespace KUSYS_Demo.Core.Interfaces
     {
         IStudentRepository Student { get; }
         ICourseRepository Course { get; }
+        IStudentCourseRepository StudentCourse { get; }
         Task CompleteAsync();
     }
 }

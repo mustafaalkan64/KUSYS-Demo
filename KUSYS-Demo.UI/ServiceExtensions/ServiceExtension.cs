@@ -23,6 +23,7 @@ namespace KUSYS_Demo.UI.ServiceExtensions
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IStudentRepository, StudentsRepository>();
             services.AddTransient<ICourseRepository, CoursesRepository>();
+            services.AddTransient<IStudentCourseRepository, StudentCourseRepository>();
 
             return services;
         }

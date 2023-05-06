@@ -14,6 +14,6 @@ namespace KUSYS_Demo.Core.Models
         public string CourseId { get; set; }
         public string CourseName { get; set; }
         public string Description { get; set; }
-        public IList<StudentCourse> StudentCourses { get; set; }
+        public IList<StudentCourses> StudentCourses { get; set; }
     }
 }

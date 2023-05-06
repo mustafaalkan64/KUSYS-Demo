@@ -1,71 +1,83 @@
 ﻿@model KUSYS_Demo.Core.ViewModels.StudentViewModel
 
 @{
-    ViewData["Title"] = "Yeni Öğrenci Ekleme";
+    ViewData["Title"] = ViewBag.Title;
     Layout = "_LayoutNew";
+}
+@if(ViewBag.Error == null)
+{
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+            <!-- jquery validation -->
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Öğrenci Formu <small></small></h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <form asp-action="Create" asp-id="studentForm" id="studentForm">
+                    <div class="card-body">
+                        <input asp-for="StudentId" type="hidden" class="form-control" />
+
+                        <div class="form-group">
+                            <label asp-for="FirstName" class="control-label"></label>
+                            <input asp-for="FirstName" class="form-control" />
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="LastName" class="control-label"></label>
+                            <input asp-for="LastName" class="form-control" />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Email" class="control-label"></label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UserName" class="control-label"></label>
+                            <input asp-for="UserName" class="form-control" />
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Birthday" class="control-label"></label>
+                            <input asp-for="Birthday" type="date" class="form-control" />
+                            <span asp-validation-for="Birthday" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.card -->
+        </div>
+        <!--/.col (left) -->
+        <!-- right column -->
+        <div class="col-md-6">
+            <div>
+                <a asp-action="Index">Back to List</a>
+            </div>
+        </div>
+        <!--/.col (right) -->
+    </div>
+}
+else
+{
+    <div class="card-body">
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h5><i class="icon fas fa-ban"></i> Alert!</h5>
+            @ViewBag.Error
+        </div>
+    </div>
 }
 
 
-
-<div class="row">
-    <!-- left column -->
-    <div class="col-md-12">
-        <!-- jquery validation -->
-        <div class="card card-primary">
-            <div class="card-header">
-                <h3 class="card-title">Öğrenci Formu <small></small></h3>
-            </div>
-            <!-- /.card-header -->
-            <!-- form start -->
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <form asp-action="Create" asp-id="studentForm" id="studentForm">
-                <div class="card-body">
-                    <input asp-for="StudentId" type="hidden" class="form-control" />
-
-                    <div class="form-group">
-                        <label asp-for="FirstName" class="control-label"></label>
-                        <input asp-for="FirstName" class="form-control" />
-                        <span asp-validation-for="FirstName" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="LastName" class="control-label"></label>
-                        <input asp-for="LastName" class="form-control" />
-                        <span asp-validation-for="LastName" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Email" class="control-label"></label>
-                        <input asp-for="Email" class="form-control" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="UserName" class="control-label"></label>
-                        <input asp-for="UserName" class="form-control" />
-                        <span asp-validation-for="UserName" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Birthday" class="control-label"></label>
-                        <input asp-for="Birthday" type="date" class="form-control" />
-                        <span asp-validation-for="Birthday" class="text-danger"></span>
-                    </div>
-                    
-                </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-            </form>
-        </div>
-        <!-- /.card -->
-    </div>
-    <!--/.col (left) -->
-    <!-- right column -->
-    <div class="col-md-6">
-        <div>
-            <a asp-action="Index">Back to List</a>
-        </div>
-    </div>
-    <!--/.col (right) -->
-</div>
 
 <script src="~/WebCore/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->

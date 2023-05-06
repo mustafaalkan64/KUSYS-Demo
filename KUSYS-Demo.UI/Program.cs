@@ -10,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDIServices(builder.Configuration);
 builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<ICourseService, CourseService>();
+builder.Services.AddScoped<IStudentCourseService, StudentCourseService>();
 
 builder.Services.AddIdentity<AppUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -17,12 +19,6 @@ builder.Services.AddIdentity<AppUser, IdentityRole>()
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
-//builder.Services.AddControllers().AddNewtonsoftJson(options =>
-//{
-//    // Use the default property (Pascal) casing
-//    options.SerializerSettings.ContractResolver = new DefaultContractResolver();
-//});
 
 builder.Services.AddControllers(
     options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
