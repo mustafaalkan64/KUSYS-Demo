@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using StackExchange.Redis;
 using System.Diagnostics;
 
@@ -18,12 +19,14 @@ namespace KUSYS_Demo.UI.Controllers
         private readonly IConfiguration _configuration;
         private readonly IStudentService _studentService;
         private readonly IStudentCourseService _studentCourseService;
+        private readonly AppSettings _appSettings;
 
-        public StudentsController(ILogger<HomeController> logger, IStudentService studentService, IStudentCourseService studentCourseService, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<IdentityRole> roleManager) : base(userManager, signInManager, roleManager)
+        public StudentsController(ILogger<HomeController> logger, IOptions<AppSettings> appIdentitySettingsAccessor, IStudentService studentService, IStudentCourseService studentCourseService, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<IdentityRole> roleManager) : base(userManager, signInManager, roleManager)
         {
             _logger = logger;
             _studentService = studentService;
             _studentCourseService = studentCourseService;
+            _appSettings = appIdentitySettingsAccessor.Value;
         }
 
         [Authorize(Roles = "Admin, User")]
@@ -94,13 +97,13 @@ namespace KUSYS_Demo.UI.Controllers
                 }
                 else
                 {
-                    ViewBag.Error = "User Not Found";
+                    ViewBag.Error = "Kullanıcı Bulunamadı!";
                     return View("Create", new StudentViewModel());
                 }
             }
             else
             {
-                ViewBag.Error = "Student Not Found";
+                ViewBag.Error = "Öğrenci Bulunamadı!";
                 return View("Create", new StudentViewModel());
             }
         }
@@ -134,8 +137,9 @@ namespace KUSYS_Demo.UI.Controllers
                         return Json(new { Message = "Email Adres Zaten Kayıtlı!", Status = false });
                     }
 
+                    var defaultPassword = _appSettings.DefaultPassword;
                     // Create a new Application User
-                    IdentityResult result = await userManager.CreateAsync(user, "Password_123");
+                    IdentityResult result = await userManager.CreateAsync(user, defaultPassword);
 
                     if (result.Succeeded)
                     {

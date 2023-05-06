@@ -4,6 +4,7 @@ using KUSYS_Demo.Services.Interfaces;
 using KUSYS_Demo.UI.ServiceExtensions;
 using Microsoft.AspNetCore.Identity;
 using KUSYS_Demo.Core.Models;
+using KUSYS_Demo.UI.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -19,6 +20,10 @@ builder.Services.AddIdentity<AppUser, IdentityRole>()
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.Configure<AppSettings>(
+            builder.Configuration.GetSection("AppSettings")
+        );
 
 builder.Services.AddControllers(
     options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);

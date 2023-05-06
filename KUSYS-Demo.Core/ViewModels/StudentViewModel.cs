@@ -16,7 +16,7 @@ namespace KUSYS_Demo.Core.ViewModels
         [StringLength(100, ErrorMessage = "FirstName Max Length Should be 100 ")]
         public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "FirstName is Required")]
+        [Required(ErrorMessage = "LastName is Required")]
         [StringLength(100, ErrorMessage = "LastName Max Length Should be 100")]
         public string LastName { get; set; }
 
