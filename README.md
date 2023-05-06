@@ -32,6 +32,16 @@ And default user password will be **"Password_123"**
 
 So, you can login with email specified and default password above.
 
+## Technologies, Utilities and Infastructure:
+
+- Dotnet 6 Core Mvc Razor
+- Ef Core 6 Code First
+- Asp.net Core Identity
+- Generic Repository
+- Unit of Work
+- Admin LTE 3 Boostrap Admin UI Templates
+
+
 
 
 
