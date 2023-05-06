@@ -27,6 +27,11 @@ You can list students, create update or delete any student \
 Assign courses to students, \
 List matched course and students.
 
+When you create a new student, a new user will be created together.
+And default user password will be **"Password_123"**
+
+So, you can login with email specified and default password above.
+
 
 
 
